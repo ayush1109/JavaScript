@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+    <center style="font-size: 50px; color: midnightblue; font-weight: 800; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-style: oblique; font-stretch: ultra-expanded; ">Select Your Choice</center> <br><br><br>
+    <select name="game" id="game" style="margin: 30px;">
+        <option value="Rock" style="color: orchid;">Rock</option>
+        <option value="Paper" style="color: orchid;">Paper</option>
+        <option value="Scissors" style="color: orchid;">Scissors</option>
+    </select>
+
+    <button type="button" class="btn btn-success">Submit</button>
+
+    <div id="userChoice" style="background-color: purple; color: white;"></div>
+    <div id="cpuChoice" style="background-color: tomato; color: black;"></div>
+    <div id="message"></div>
+    <div id="userScore"></div>
+    <div id="cpuScore"></div>
+
+    <script>
+        let message
+        let cpuChoice
+        let userScore = 0
+        let cpuScore = 0
+        let us = document.querySelector('#userScore')
+        let cs = document.querySelector('#cpuScore')
+        let btn = document.querySelector('button')
+        btn.addEventListener('click', play)
+        let cpu = document.querySelector('#cpuChoice')
+        let messageDiv = document.querySelector('#message')
+        let user = document.querySelector('#userChoice')
+
+
+        function getRndInteger(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        function play(){
+
+        let cpuOption = getRndInteger(1, 4)
+
+        if(cpuOption == 1)
+            cpuChoice = 'Rock'
+        else if(cpuOption == 2)
+            cpuChoice = 'Paper'
+        else if(cpuOption == 3)
+            cpuChoice = 'Scissors'
+
+        cpu.innerHTML = `CPU chooses ${cpuChoice}`
+
+        let userChoice = document.querySelector('select').value
+        user.innerHTML = `User chooses ${userChoice}`
+            
+            if(userChoice == 'Rock' && cpuChoice == 'Scissors'){
+                message = 'User Wins'
+                ++userScore
+                
+            }
+            else if((userChoice == 'Rock' && cpuChoice == 'Rock') || (userChoice == 'Paper' && cpuChoice == 'Paper') || (userChoice == 'Scissors' && cpuChoice == 'Scissors')){
+                message = 'Tied'
+            }
+            else if(userChoice == 'Paper' && cpuChoice == 'Rock'){
+                message = 'User Wins'
+                ++userScore
+            }
+            else if(userChoice == 'Scissors' && cpuChoice == 'Paper'){
+                message = 'User Wins'
+                ++userScore
+            }
+            else {
+                message = 'CPU Wins'
+                ++cpuScore
+            }
+                messageDiv.innerHTML = message
+        us.innerHTML = `User Score is ${userScore}`
+        cs.innerHTML = `CPU Score is ${cpuScore}`
+        checkGame(userScore, cpuScore)
+        }
+
+        function checkGame(userScore, cpuScore){
+            if(userScore == 10 ) {
+                alert('User Wins The Game')
+                btn.disabled = true
+            }
+            if(cpuScore == 10 ) {
+                alert('CPU Wins The Game')
+                btn.disabled = true
+            }
+        }
+    </script>
+</body>
+
+</html>
